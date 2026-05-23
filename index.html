@@ -888,7 +888,11 @@ function loadTrack(idx, autoSwitch) {
   const audio = document.getElementById('audioPlayer');
   audio.src = t.file;
   audio.load();
-  if (isPlaying) audio.play();
+  if (isPlaying) {
+    audio.play().catch(() => {
+      audio.addEventListener('canplaythrough', () => audio.play(), { once: true });
+    });
+  }
 
   audio.ontimeupdate = () => {
     if (!audio.duration) return;
@@ -949,7 +953,9 @@ function togglePlay() {
     artEl.classList.remove('spinning');
     document.getElementById('shimmerOverlay').classList.remove('active');
   } else {
-    audio.play();
+    audio.play().catch(() => {
+      audio.addEventListener('canplaythrough', () => audio.play(), { once: true });
+    });
     isPlaying = true;
     btn.innerHTML = '&#9646;&#9646;';
     btn.classList.add('playing');
