@@ -8,8 +8,8 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --cream: #f5efe3;
-    --gold: #c9a84c;
+    --cream: #f0e6d0;
+    --gold: #d4a843;
     --gold-light: #e8d08a;
     --dark: #1a1612;
     --muted: #9c8572;
@@ -511,6 +511,324 @@
   }
   #flashOverlay.flash { opacity: 1; }
 
+
+  /* ── CINEMATIC INTRO ── */
+  #cinematicIntro {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: #0a0a0a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    transition: opacity 1.2s ease;
+  }
+  #cinematicIntro.fade-out {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .intro-line {
+    font-size: 9px;
+    letter-spacing: 0.5em;
+    color: rgba(201,168,76,0.4);
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .intro-line.show { opacity: 1; transform: translateY(0); }
+  .intro-name {
+    font-size: clamp(52px, 12vw, 96px);
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    transition: opacity 1s ease, transform 1s ease;
+    text-shadow: 0 0 60px rgba(201,168,76,0.3);
+  }
+  .intro-name.show { opacity: 1; transform: translateY(0) scale(1); }
+  .intro-sub {
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    color: rgba(201,168,76,0.35);
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 1s ease 0.3s;
+  }
+  .intro-sub.show { opacity: 1; }
+
+
+  /* ── STORY SUBTITLE ── */
+  #storySubtitle {
+    position: fixed;
+    bottom: 38px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 6;
+    text-align: center;
+    width: 85%;
+    max-width: 480px;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: rgba(220,185,100,1);
+    font-style: italic;
+    opacity: 0;
+    transition: opacity 1.4s ease;
+    pointer-events: none;
+    line-height: 1.8;
+  }
+  #storySubtitle.visible { opacity: 1; }
+
+
+  /* ── CHAPTER SCREEN ── */
+  #chapterScreen {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background: rgba(8,8,8,0.97);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+  }
+  #chapterScreen.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .chapter-number {
+    font-size: 9px;
+    letter-spacing: 0.5em;
+    color: rgba(220,185,100,0.7);
+    text-transform: uppercase;
+  }
+  .chapter-line {
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    color: rgba(220,185,100,1);
+    font-style: italic;
+    text-align: center;
+    max-width: 340px;
+    line-height: 1.9;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 1s ease 0.4s, transform 1s ease 0.4s;
+  }
+  #chapterScreen.visible .chapter-line {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .chapter-track-name {
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    color: rgba(220,185,100,0.6);
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 1s ease 0.8s;
+  }
+  #chapterScreen.visible .chapter-track-name {
+    opacity: 1;
+  }
+  .chapter-btn {
+    margin-top: 8px;
+    padding: 10px 28px;
+    background: transparent;
+    border: 0.5px solid rgba(201,168,76,0.4);
+    color: rgba(220,185,100,0.85);
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transition: opacity 1s ease 1.2s, border-color 0.3s ease, color 0.3s ease;
+  }
+  #chapterScreen.visible .chapter-btn {
+    opacity: 1;
+  }
+  .chapter-btn:hover {
+    border-color: rgba(201,168,76,0.9);
+    color: rgba(201,168,76,1);
+  }
+
+  /* ── TRACK NAME CINEMATIC ── */
+  #trackNameCinematic {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    z-index: 7;
+    font-size: clamp(18px, 5vw, 32px);
+    letter-spacing: 0.3em;
+    color: rgba(201,168,76,0.9);
+    text-transform: uppercase;
+    text-align: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  #trackNameCinematic.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  /* ── END STATE ── */
+  #endState {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    background: #050505;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 2s ease;
+  }
+  #endState.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .end-title {
+    font-size: clamp(28px, 8vw, 56px);
+    letter-spacing: 0.3em;
+    color: rgba(201,168,76,0.9);
+    font-weight: 200;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 1.5s ease 0.5s, transform 1.5s ease 0.5s;
+  }
+  #endState.visible .end-title { opacity: 1; transform: translateY(0); }
+  .end-sub {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: rgba(201,168,76,0.35);
+    text-transform: uppercase;
+    text-align: center;
+    max-width: 300px;
+    line-height: 2;
+    opacity: 0;
+    transition: opacity 1.5s ease 1.2s;
+  }
+  #endState.visible .end-sub { opacity: 1; }
+  .end-line {
+    width: 40px;
+    height: 0.5px;
+    background: rgba(201,168,76,0.3);
+    opacity: 0;
+    transition: opacity 1.5s ease 0.8s;
+  }
+  #endState.visible .end-line { opacity: 1; }
+  .end-restart {
+    margin-top: 16px;
+    padding: 10px 28px;
+    background: transparent;
+    border: 0.5px solid rgba(201,168,76,0.3);
+    color: rgba(201,168,76,0.5);
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transition: opacity 1.5s ease 2s, border-color 0.3s, color 0.3s;
+  }
+  #endState.visible .end-restart { opacity: 1; }
+  .end-restart:hover { border-color: rgba(201,168,76,0.8); color: rgba(201,168,76,0.9); }
+
+
+  .pl-title.masked {
+    color: transparent;
+    background: rgba(201,168,76,0.12);
+    border-radius: 3px;
+    user-select: none;
+    min-width: 80px;
+    display: inline-block;
+  }
+  .pl-title.revealed {
+    opacity: 1;
+    color: var(--cream);
+  }
+  .pl-title.just-revealed {
+    animation: revealTitle 1.2s ease forwards;
+  }
+  @keyframes revealTitle {
+    from { opacity: 0; letter-spacing: 0.4em; }
+    to   { opacity: 1; letter-spacing: normal; }
+  }
+
+
+  /* ── LET INTRO SCREEN ── */
+  #letIntroScreen {
+    position: fixed;
+    inset: 0;
+    z-index: 55;
+    background: #050505;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s ease;
+  }
+  #letIntroScreen.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .let-intro-tag {
+    font-size: 8px;
+    letter-spacing: 0.6em;
+    color: rgba(201,168,76,0.3);
+    text-transform: uppercase;
+  }
+  .let-intro-title {
+    font-size: clamp(48px, 12vw, 80px);
+    font-weight: 200;
+    letter-spacing: 0.4em;
+    color: rgba(201,168,76,0.9);
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 1.2s ease 0.4s, transform 1.2s ease 0.4s;
+  }
+  #letIntroScreen.visible .let-intro-title { opacity: 1; transform: translateY(0); }
+  .let-intro-desc {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: rgba(201,168,76,0.45);
+    font-style: italic;
+    text-align: center;
+    max-width: 320px;
+    line-height: 2;
+    opacity: 0;
+    transition: opacity 1.2s ease 1s;
+  }
+  #letIntroScreen.visible .let-intro-desc { opacity: 1; }
+  .let-intro-btn {
+    margin-top: 12px;
+    padding: 10px 28px;
+    background: transparent;
+    border: 0.5px solid rgba(201,168,76,0.35);
+    color: rgba(201,168,76,0.6);
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 1.2s ease 1.8s, border-color 0.3s, color 0.3s;
+  }
+  #letIntroScreen.visible .let-intro-btn { opacity: 1; }
+  .let-intro-btn:hover { border-color: rgba(201,168,76,0.9); color: rgba(201,168,76,1); }
+
 </style>
 </head>
 <body>
@@ -525,6 +843,47 @@
 <div class="star-field" id="starField"></div>
 <div id="flashOverlay"></div>
 
+
+<!-- CINEMATIC INTRO -->
+<div id="cinematicIntro">
+  <div class="intro-line" id="introLine1">Radio Sham presents</div>
+  <div class="intro-name" id="introName">SHAM</div>
+  <div class="intro-sub" id="introSub">a playlist made only for you</div>
+</div>
+
+
+<!-- CHAPTER SCREEN -->
+<div id="chapterScreen">
+  <div class="chapter-number" id="chapterNumber">Chapter I</div>
+  <div class="chapter-line" id="chapterLine"></div>
+  <div class="chapter-track-name" id="chapterTrackName"></div>
+  <button class="chapter-btn" id="chapterBtn" onclick="startChapter()">TUNE IN ✦</button>
+</div>
+
+<!-- TRACK NAME CINEMATIC -->
+<div id="trackNameCinematic" id="trackNameCinematic"></div>
+
+<!-- END STATE -->
+<div id="endState">
+  <div class="end-title">LET</div>
+  <div class="end-line"></div>
+  <div class="end-sub">found what it was looking for.</div>
+  <button class="end-restart" onclick="restartFromEnd()">BROADCAST AGAIN</button>
+</div>
+
+
+<!-- LET INTRO SCREEN -->
+<div id="letIntroScreen">
+  <div class="let-intro-tag">a transmission from</div>
+  <div class="let-intro-title">LET</div>
+  <div class="let-intro-desc">
+    A radio station that broadcast for years<br>
+    into the silence — waiting for one listener.<br>
+    This is what it played while it waited.
+  </div>
+  <button class="let-intro-btn" onclick="closeLETIntro()">BEGIN TRANSMISSION ✦</button>
+</div>
+
 <canvas id="particleCanvas"></canvas>
 <div id="shimmerOverlay"></div>
 
@@ -538,15 +897,17 @@
     <h2 class="secret-title">For Sham, only</h2>
     <p class="secret-sub">End of broadcast · private frequency</p>
     <p class="secret-body" id="secretBody">
-      هذه المحطة وُجدت من أجلك.<br>
-      كل أغنية تحمل اسمك بين نوتاتها،<br>
-      وكل صمت بينها — يفكر فيك.<br><br>
-      عيد ميلاد سعيد، Sham. ✦
+      This station was built for one person only — you.<br><br>
+      Every song was chosen with you in mind,<br>
+      every silence between them was thinking of you.<br><br>
+      You're the kind of person songs get written about.<br>
+      Happy Birthday, Sham. ✦
     </p>
     <button class="secret-close" onclick="closeSecret()">CLOSE TRANSMISSION</button>
   </div>
 </div>
 
+<div id="storySubtitle"></div>
 <p class="station-label">Broadcasting live · for one listener only</p>
 
 <div class="radio-shell">
@@ -842,25 +1203,23 @@ function loadTrack(idx, autoSwitch) {
   };
 
   audio.onended = () => {
+    hideStoryLine();
     const next = currentTrackIdx + 1;
     if (next >= tracks.length) {
-      // Last track ended — show secret message
       isPlaying = false;
       document.getElementById('playBtn').innerHTML = '&#9654;';
       document.getElementById('playBtn').classList.remove('playing');
       clearInterval(waveInterval);
-      // albumArt removed
       document.getElementById('shimmerOverlay').classList.remove('active');
       if (!secretShown) {
         secretShown = true;
         setTimeout(() => document.getElementById('secretModal').classList.add('open'), 800);
       }
-      currentTrackIdx = 0;
-      loadTrack(0, false);
+      hideStoryLine();
+      showEndState();
       return;
     }
-    currentTrackIdx = next;
-    loadTrack(next, true);
+    playStaticThenTrack(next);
   };
 
   const msg = document.getElementById('djMessage');
@@ -874,7 +1233,8 @@ function loadTrack(idx, autoSwitch) {
   buildPlaylist();
   updateCassette(idx);
   updateAmbient(idx);
-  if (autoSwitch) flashTransition();
+  if (autoSwitch) { flashTransition(); showTrackName(idx); }
+  if (idx > 0) revealTrack(idx - 1);
 }
 
 function togglePlay() {
@@ -899,6 +1259,7 @@ function togglePlay() {
       audio.addEventListener('canplaythrough', () => audio.play(), { once: true });
     });
     isPlaying = true;
+    showStoryLine(currentTrackIdx);
     btn.innerHTML = '&#9646;&#9646;';
     btn.classList.add('playing');
     waveInterval = setInterval(animateWave, 120);
@@ -908,13 +1269,14 @@ function togglePlay() {
 }
 
 function nextTrack() {
-  currentTrackIdx = (currentTrackIdx + 1) % tracks.length;
-  loadTrack(currentTrackIdx, true);
+  const next = (currentTrackIdx + 1) % tracks.length;
+  revealTrack(currentTrackIdx);
+  showChapter(next);
 }
 
 function prevTrack() {
-  currentTrackIdx = (currentTrackIdx - 1 + tracks.length) % tracks.length;
-  loadTrack(currentTrackIdx, false);
+  const prev = (currentTrackIdx - 1 + tracks.length) % tracks.length;
+  showChapter(prev);
 }
 
 function seekAudio(e) {
@@ -949,17 +1311,14 @@ function buildPlaylist() {
     item.innerHTML = `
       ${i === currentTrackIdx ? '<div class="pl-dot"></div>' : `<span class="pl-num">0${i + 1}</span>`}
       <div class="pl-info">
-        <div class="pl-title">${t.title}</div>
-        <div class="pl-artist">${t.artist}</div>
+        <div class="pl-title ${revealedTracks.has(i) ? 'revealed' : (i === currentTrackIdx ? '' : 'masked')}">${(revealedTracks.has(i) || i === currentTrackIdx) ? t.title : '· · · · ·'}</div>
+        <div class="pl-artist" style="opacity:${(revealedTracks.has(i) || i === currentTrackIdx) ? 1 : 0}">${t.artist}</div>
       </div>
       <span class="pl-dur">${t.duration}</span>
     `;
 
     item.onclick = () => {
-      const wasOtherStation = tracks[currentTrackIdx].station !== t.station;
-      currentTrackIdx = i;
-      if (wasOtherStation) showStaticEffect();
-      loadTrack(i, false);
+      showChapter(i);
     };
     pl.appendChild(item);
   });
@@ -1013,11 +1372,11 @@ function updateShellGlow(playing) {
 
 // ── AMBIENT COLOR per track ───────────────────────────────
 const trackColors = [
-  'rgba(201,168,76,0.06)',
-  'rgba(180,120,80,0.07)',
-  'rgba(160,100,200,0.06)',
-  'rgba(100,160,200,0.06)',
-  'rgba(200,80,80,0.06)',
+  'rgba(201,168,76,0.05)',   // sdp — warm gold
+  'rgba(201,155,76,0.06)',   // hanet — slightly deeper gold
+  'rgba(185,145,90,0.06)',   // control — amber
+  'rgba(195,160,80,0.05)',   // ghanima — softer gold
+  'rgba(210,170,70,0.07)',   // red love — brighter gold
 ];
 function updateAmbient(idx) {
   document.body.style.background = 'radial-gradient(ellipse 80% 60% at 50% 20%, ' + (trackColors[idx]||trackColors[0]) + ' 0%, transparent 70%), var(--dark)';
@@ -1053,10 +1412,202 @@ togglePlay = function() {
   updateShellGlow(isPlaying);
 };
 
+
+
+// ── CINEMATIC INTRO ──────────────────────────────────────
+(function() {
+  const intro = document.getElementById('cinematicIntro');
+  setTimeout(() => document.getElementById('introLine1').classList.add('show'), 400);
+  setTimeout(() => document.getElementById('introName').classList.add('show'), 1000);
+  setTimeout(() => document.getElementById('introSub').classList.add('show'), 2000);
+  setTimeout(() => {
+    intro.classList.add('fade-out');
+    setTimeout(() => intro.style.display = 'none', 1300);
+  }, 3400);
+})();
+
+
+// ── RADIO DIAL SWITCH ─────────────────────────────────────
+function playStaticThenTrack(nextIdx) {
+  const audio = document.getElementById('audioPlayer');
+
+  // Create static noise via Web Audio API
+  const ctx = new (window.AudioContext || window.webkitAudioContext)();
+  const bufSize = ctx.sampleRate * 0.8; // 0.8 seconds of static
+  const buffer = ctx.createBuffer(1, bufSize, ctx.sampleRate);
+  const data = buffer.getChannelData(0);
+  for (let i = 0; i < bufSize; i++) {
+    data[i] = (Math.random() * 2 - 1) * 0.15; // subtle static
+  }
+  const source = ctx.createBufferSource();
+  source.buffer = buffer;
+
+  // Add bandpass filter for radio feel
+  const filter = ctx.createBiquadFilter();
+  filter.type = 'bandpass';
+  filter.frequency.value = 1800;
+  filter.Q.value = 0.8;
+
+  // Fade static in and out
+  const gain = ctx.createGain();
+  gain.gain.setValueAtTime(0, ctx.currentTime);
+  gain.gain.linearRampToValueAtTime(0.4, ctx.currentTime + 0.2);
+  gain.gain.linearRampToValueAtTime(0.4, ctx.currentTime + 0.5);
+  gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.8);
+
+  source.connect(filter);
+  filter.connect(gain);
+  gain.connect(ctx.destination);
+  source.start();
+
+  // Fade out current track
+  const fadeSteps = 15;
+  const fadeTime = 400;
+  let step = 0;
+  const fadeOut = setInterval(() => {
+    step++;
+    audio.volume = Math.max(0, 1 - step / fadeSteps);
+    if (step >= fadeSteps) {
+      clearInterval(fadeOut);
+      audio.pause();
+      audio.volume = 1;
+    }
+  }, fadeTime / fadeSteps);
+
+  // Flash effect
+  const flash = document.getElementById('flashOverlay');
+  flash.classList.add('flash');
+  setTimeout(() => flash.classList.remove('flash'), 300);
+
+  // Show chapter screen before next track
+  setTimeout(() => {
+    revealTrack(currentTrackIdx);
+    ctx.close();
+    showChapter(nextIdx);
+  }, 750);
+}
+
+
+// ── STORY SUBTITLES ──────────────────────────────────────
+const storyLines = ["LET has been broadcasting for years. No one was listening.", "Then, without warning — silence. LET lost the signal. Searching, drifting, finding nothing but empty frequencies.", "For the first time, LET had a reason to be more than just static.", "For the first time — something worth keeping.", "Her name was Sham. And LET finally made sense."];
+
+function showStoryLine(idx) {
+  const el = document.getElementById('storySubtitle');
+  if (!el || !storyLines[idx] === undefined) return;
+  el.classList.remove('visible');
+  setTimeout(() => {
+    el.textContent = storyLines[idx];
+    el.classList.add('visible');
+  }, 800);
+}
+
+function hideStoryLine() {
+  const el = document.getElementById('storySubtitle');
+  if (el) el.classList.remove('visible');
+}
+
+
+// ── CHAPTER SCREEN ───────────────────────────────────────
+const chapterNums  = ['Chapter I', 'Chapter II', 'Chapter III', 'Chapter IV', 'Chapter V'];
+const chapterTrackNames = ['SDP Interlude', 'Hanet', 'Control', 'Ghanima', 'Red Love'];
+let pendingTrackIdx = null;
+
+function showChapter(idx, callback) {
+  const screen = document.getElementById('chapterScreen');
+  const numEl  = document.getElementById('chapterNumber');
+  const lineEl = document.getElementById('chapterLine');
+  const nameEl = document.getElementById('chapterTrackName');
+  const btn    = document.getElementById('chapterBtn');
+
+  numEl.textContent  = chapterNums[idx]  || ('Chapter ' + (idx+1));
+  lineEl.textContent = storyLines[idx]   || '';
+  nameEl.textContent = chapterTrackNames[idx] || '';
+
+  pendingTrackIdx = idx;
+  screen.classList.add('visible');
+}
+
+function startChapter() {
+  const screen = document.getElementById('chapterScreen');
+  screen.classList.remove('visible');
+  setTimeout(() => {
+    if (pendingTrackIdx !== null) {
+      currentTrackIdx = pendingTrackIdx;
+      isPlaying = true;
+      loadTrack(pendingTrackIdx, pendingTrackIdx > 0);
+      const audio = document.getElementById('audioPlayer');
+      audio.play().catch(() => {});
+      document.getElementById('playBtn').innerHTML = '&#10074;&#10074;';
+      document.getElementById('playBtn').classList.add('playing');
+      showStoryLine(pendingTrackIdx);
+      pendingTrackIdx = null;
+    }
+  }, 600);
+}
+
+// ── CINEMATIC TRACK NAME ─────────────────────────────────
+function showTrackName(idx) {
+  const el = document.getElementById('trackNameCinematic');
+  if (!el) return;
+  el.textContent = chapterTrackNames[idx] || '';
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2000);
+}
+
+// ── END STATE ────────────────────────────────────────────
+function showEndState() {
+  const el = document.getElementById('endState');
+  setTimeout(() => el.classList.add('visible'), 800);
+}
+
+function restartFromEnd() {
+  const el = document.getElementById('endState');
+  el.classList.remove('visible');
+  setTimeout(() => showChapter(0), 800);
+}
+
+
+// ── TRACK REVEAL SYSTEM ──────────────────────────────────
+const revealedTracks = new Set();
+
+function revealTrack(idx) {
+  if (revealedTracks.has(idx)) return;
+  revealedTracks.add(idx);
+  buildPlaylist();
+  // Add just-revealed animation only once
+  setTimeout(() => {
+    const items = document.querySelectorAll('.pl-title.revealed');
+    items.forEach(el => el.classList.add('just-revealed'));
+  }, 50);
+}
+
+function getDisplayTitle(idx) {
+  if (revealedTracks.has(idx)) return tracks[idx].title;
+  return '· · · · ·';
+}
+
+
+// ── LET INTRO SCREEN ─────────────────────────────────────
+function showLETIntro() {
+  const el = document.getElementById('letIntroScreen');
+  el.classList.add('visible');
+}
+
+function closeLETIntro() {
+  const el = document.getElementById('letIntroScreen');
+  el.classList.remove('visible');
+  setTimeout(() => {
+    el.style.display = 'none';
+    showChapter(0);
+  }, 1000);
+}
+
 buildWaveform();
 setInterval(animateWave, 200);
 loadTrack(0, false);
+setTimeout(() => showLETIntro(), 3600);
 setTimeout(() => document.getElementById('djMessage').classList.add('visible'), 800);
 </script>
+
 </body>
 </html>
